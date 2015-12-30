@@ -30,7 +30,8 @@ void InitListByHead(List* head)
 //tou插法
 void CreateListByHead(List * head)
 {
-	for(int i=1;i<=10;++i)
+	int i=0;
+	for(i=1;i<=10;++i)
 	{
 		ListNode *s=(ListNode*)malloc(sizeof(ListNode));
 		assert(s!=NULL);
@@ -44,8 +45,9 @@ void CreateListByHead(List * head)
 void CreateListByHead2(List * head)
 {
 	ListNode *p=*head;
-	for(int i=1;i<=10;++i)
-	
+	int i=0;
+	for(i=1;i<=10;++i)
+	{
 		//尾插法
 		p=p->next=(ListNode*)malloc(sizeof(ListNode));
 		assert(p!=NULL);
@@ -67,13 +69,16 @@ void ShowListByHead(List *head)
 //尾插法
 void CreateList(List * head)
 {
+	int i=0;
+	ListNode *p=*head;
+
 	*head=(ListNode*)malloc(sizeof(ListNode));
 	assert(*head !=NULL);
 
 	(*head)->data=1;
 	(*head)->next=NULL;
-	ListNode *p=*head;
-	for(int i=2;i<=10;++i)
+
+	for(i=2;i<=10;++i)
 	{
 
 		ListNode *s=(ListNode*)malloc(sizeof(ListNode));
@@ -87,11 +92,11 @@ void CreateList(List * head)
 //头插法
 void CreateList2(List * head)
 {
+	int i=0;
 	*head=(ListNode*)malloc(sizeof(ListNode));
 	(*head)->data=1;
 	(*head)->next=NULL;
-
-	for (int i=2;i<10;++i)
+	for (i=2;i<10;++i)
 	{
 		ListNode *s=(ListNode*)malloc(sizeof(ListNode));
 		assert(s!=NULL);
@@ -114,12 +119,13 @@ void ShowList(List *head)
 int main( int argc, char* argv[] )
 {
 	List mylist;
+	List myHeadlist;
 
 	InitList(&mylist);
 	CreateList2(&mylist);
 	ShowList(&mylist);
 	
-	List myHeadlist;
+	
 	InitListByHead(&myHeadlist);
 	CreateListByHead2(&myHeadlist);
 	ShowListByHead(&myHeadlist);
