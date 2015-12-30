@@ -56,15 +56,44 @@ void CreateListByHead2(List * head)
 
 	}
 }
+//带头节点链表逆置
+void ReverseByHead(List* head)
+{
+	ListNode *p=*head,*q;
+	p=p->next;
+	(*head)->next=NULL;
+	while (p!=NULL)
+	{
+		q=p;
+		p=p->next;
+		q->next=(*head)->next;
+		(*head)->next=q;
+
+	}
+}
+//逆置
+void Reverse(List* L)
+{
+	ListNode *p=NULL,*q=*L;
+	while (q!=NULL)
+	{
+		*L=q->next;
+		q->next=p;
+		p=q;
+		q=*L;
+	}
+	*L=p;
+	
+}
 void ShowListByHead(List *head)
 {
 	ListNode *p=(*head)->next;
 	while (p!=NULL)
 	{
-		printf("%d->",p->data);
+		printf("%d ",p->data);
 		p=p->next;
 	}
-	printf("NULL\n");
+	printf("\n");
 }
 //尾插法
 void CreateList(List * head)
@@ -110,10 +139,10 @@ void ShowList(List *head)
 	ListNode *p=*head;
 	while (p!=NULL)
 	{
-		printf("%d->",p->data);
+		printf("%d ",p->data);
 		p=p->next;
 	}
-	printf("NULL\n");
+	printf("\n");
 }
 //http://edu.51cto.com/lesson/id-79891.html
 int main( int argc, char* argv[] )
@@ -124,10 +153,14 @@ int main( int argc, char* argv[] )
 	InitList(&mylist);
 	CreateList2(&mylist);
 	ShowList(&mylist);
+	Reverse(&mylist);
+	ShowList(&mylist);
 	
 	
 	InitListByHead(&myHeadlist);
 	CreateListByHead2(&myHeadlist);
+	ShowListByHead(&myHeadlist);
+	ReverseByHead(&myHeadlist);
 	ShowListByHead(&myHeadlist);
 
 
