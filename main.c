@@ -1,4 +1,7 @@
+
 #include "SeqList.h"
+#include <vld.h>
+
  int main( int argc, char * argv[])
  {
 
@@ -18,7 +21,7 @@
 		 printf("* [7]  find			[8] length     *\n");
 		 printf("* [9]  delete_pos		[10] delete_val *\n");
 		 printf("* [11] sort			[12] resver     *\n");
-		 printf("* [13] clear			[14] destroy    *\n");
+		 printf("* [13] clear			[14*] destroy    *\n");
 		 printf("* [0] quit_system						*\n");
 		 printf("***************************************\n");
 		 printf("please select:>");
@@ -76,18 +79,70 @@
 			 break;
 		 case 7:
 			 {
-			 }
-			 break;
-		 case 11:
-			 {
+				 printf("请输入要查找的数据:\n");
+				 scanf("%d", &item);
+				 pos = find(&mylist, item);
+				 if (pos == -1)
+				 {
+					 printf("查找的数据%d在顺序表中不存在\n",item);
+				 }
+				 else {
+					 printf("查找的数据%d在顺序表中的%d下标位置\n",item,pos);
+
+
+				 }
 
 			 }
 			 break;
+		 case 8:
+			 {
+				 printf("顺序表的长度为:> %d \n",length(&mylist));
+			 }
+			 break;
+		 case 9:
+		 {
+
+			 printf("请输入要删除数据的位置:\n");
+			 scanf("%d", &pos);
+			 delete_pos(&mylist, pos);
+
+		 }
+		 break;
+		 case 10:
+		 {
+			 printf("请输入要删除的数据：>");
+			 scanf("%d", &item);
+			 delete_val(&mylist, item);
+
+		 }
+		 break;
+		 case 11:
+			 {
+				 sort(&mylist);
+			 }
+			 break;
+		 case 12:
+		 {
+			 resver(&mylist);
+
+		 }
+		 break;
+		 case 13:
+		 {
+			 clear(&mylist);
+		 }
+		 break;
+// 		 case 14:
+// 		 {
+// 			 destroy(&mylist);
+// 		 }
+// 		 break;
 		 default:
 			 printf("input error,reinput\n");
 			 break;
 		 }
 	 }
+	 destroy(&mylist);
 
 
 	 return 0;

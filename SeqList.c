@@ -94,3 +94,96 @@ void insert_pos(SeqList *list,int pos,ElemType x)
 	list->size++;
 
 }
+int find(SeqList *list, ElemType key)
+{
+	for (int i = 0; i < list->size; ++i)
+	{
+		if (list->data[i] == key)
+		{
+			return i;
+
+		}
+	}
+	return -1;
+}
+int length(SeqList *list)
+{
+	return list->size;
+}
+void delete_pos(SeqList *list,int pos)
+{
+	if (pos < 0 || pos >= list->size)
+	{
+		printf("删除数据的位置非法，不能删除数据！\n");
+		return;
+	}
+	for (int i = pos; i < list->size-1; ++i)
+	{
+		list->data[i] = list->data[i+1];
+	}
+	list->size--;
+
+}
+
+void delete_val(SeqList *list, ElemType key)
+{
+	int pos = find(list, key);
+	if (pos == -1)
+	{
+		printf("要删除的数据不存在\n");
+		return;
+	}
+	delete_pos(list, pos);
+}
+void sort(SeqList *list)
+{
+
+	for (int i = 0; i < list->size; ++i)
+	{
+		for (int j = list->size-1;j>0; j--)
+		{
+			if (list->data[j] < list->data[j - 1])
+			{
+				ElemType temp = list->data[j];
+				list->data[j] = list->data[j - 1];
+				list->data[j - 1] = temp;
+			}
+
+		}
+	}
+}
+void resver(SeqList *list)
+{
+	if (list->size == 0 || list->size == 1)
+	{
+		return;
+	}
+	int low = 0;
+	int high = list->size - 1;
+	ElemType temp;
+	while (low < high)
+	{
+		temp = list->data[low]; 
+		list->data[low] = list->data[high];
+		list->data[high] = temp;
+		low++;
+		high--;
+	}
+
+}
+void clear(SeqList *list)
+{
+	list->size = 0;
+}
+void destroy(SeqList *list)
+{
+
+	if (list->data != NULL)
+	{
+		free(list->data);
+		list->data = NULL;
+		list->capacity = 0;
+		list->size = 0;
+	}
+	
+}
