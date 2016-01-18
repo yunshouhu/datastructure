@@ -1,9 +1,28 @@
 #include "SeqList.h"
 
+
+BOOL Inc(SeqList *list)
+{
+	if (list->size >= list->capacity)
+	{
+		//增大空间
+		ElemType* newbase = (ElemType*)realloc(list->data, sizeof(ElemType)*(list->capacity + INC_SIZE));
+		if(newbase==NULL)
+		{
+			printf("增配空间失败！内存不足\n");
+			return FALSE;
+		}
+		list->data = newbase;
+		list->capacity += INC_SIZE;
+	}
+	
+	return TRUE;
+}
 void InitSeqList(SeqList *list)
 {
 
-	list->data=(ElemType*)malloc(sizeof(ElemType));
+	list->data = (ElemType*)malloc(sizeof(ElemType)*SEQLIST_INIT_ZISE);
+
 	assert(list!=NULL);
 	list->capacity=SEQLIST_INIT_ZISE;
 	list->size=0;
@@ -11,10 +30,10 @@ void InitSeqList(SeqList *list)
 }
 void push_back(SeqList *list,ElemType x)
 {
-	if(list->size>=list->capacity)
+	if(list->size>=list->capacity && !Inc(list))
 	{
 
-		printf("list full,cannot insert data\n");
+		printf("list full,%d cannot insert data\n",x);
 		return ;
 	}
 	list->data[list->size]=x;
@@ -25,9 +44,9 @@ void push_back(SeqList *list,ElemType x)
 void push_front(SeqList *list,ElemType x)
 {
 	int i=0;
-	if(list->size>=list->capacity)
+	if(list->size>=list->capacity && !Inc(list))
 	{
-		printf("list full,cannot insert data\n");
+		printf("list full,%d cannot insert data\n",x);
 		return ;
 	}
 	
@@ -85,6 +104,12 @@ void insert_pos(SeqList *list,int pos,ElemType x)
 		printf("invalid or error pos \n");
 		return ;
 	}
+	if (list->size >= list->capacity && !Inc(list))
+	{
+		printf("list full,%d cannot  insert data by pos\n", x);
+		return;
+	}
+
 	for(i=list->size;i>pos;--i)
 	{
 
@@ -185,5 +210,36 @@ void destroy(SeqList *list)
 		list->capacity = 0;
 		list->size = 0;
 	}
-	
+}
+void merge(SeqList *lt, SeqList *la, SeqList *lb)
+{
+	lt->capacity = la->size + lb->size;
+	lt->data = (ElemType*)malloc(sizeof(ElemType) *lt->capacity);
+	assert(lt->data != NULL);
+
+	int ia = 0;
+	int ib = 0;
+	int ic = 0;
+	while(ia<la->size && ib<lb->size)
+	{
+		if(la->data[ia]< lb->data[ib])
+		{
+			lt->data[ic++] = la->data[ia++];
+		}else
+		{
+			lt->data[ic++] = lb->data[ib++];
+
+		}
+	}
+	while(ia<la->size)
+	{
+		lt->data[ic++] = la->data[ia++];
+	}
+	while(ib< lb->size)
+	{
+		lt->data[ic++] = lb->data[ib++];
+	}
+	lt->size = la->size + lb->size;
+
+
 }

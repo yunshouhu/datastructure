@@ -6,8 +6,10 @@
 #include <stdio.h>
 #include <malloc.h>
 #include <assert.h>
+#include "define.h"
 
-#define SEQLIST_INIT_ZISE 18
+#define SEQLIST_INIT_ZISE 8
+#define INC_SIZE 10
 typedef int ElemType;
 typedef struct SeqList{
 
@@ -16,6 +18,7 @@ typedef struct SeqList{
 	int size;
 } SeqList;
 
+BOOL Inc(SeqList *list);
 void InitSeqList(SeqList *list);
 void push_back(SeqList *list,ElemType x);
 void push_front(SeqList *list,ElemType x);
@@ -32,4 +35,6 @@ void sort(SeqList *list);
 void resver(SeqList *list);
 void clear(SeqList *list);
 void destroy(SeqList *list);
+void merge( SeqList *lt,  SeqList *la, SeqList *lb);
+
 #endif // SeqList_h__

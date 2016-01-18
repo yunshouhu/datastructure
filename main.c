@@ -1,5 +1,6 @@
 
 #include "SeqList.h"
+//目标是没有内存泄露 No memory leaks detected.
 #include <vld.h>
 
  int main( int argc, char * argv[])
