@@ -15,11 +15,13 @@ void InitList(List *list)
 }
 void push_back(List *list, ElemType item)
 {
+	Node* s = _buynode(item);
+	/**
 	Node *s = (Node*)malloc(sizeof(Node));
 	assert(s != NULL);	
 	s->data = item;
 	s->next = NULL;
-
+	*/
 	list->last->next = s;
 	list->last = s;
 	list->size++;
@@ -37,9 +39,12 @@ void show_list(List *list)
 }
 void push_front(List *list, ElemType x)
 {
+	Node* s = _buynode(x);
+	/**
 	Node *s = (Node*)malloc(sizeof(Node));
 	assert(s != NULL);
 	s->data = x;
+	*/
 	s->next = list->first->next;
 
 	list->first->next = s;
@@ -82,10 +87,13 @@ void pop_front(List *list)
 
 void insert_val(List * list, ElemType x)
 {
+	Node *s = _buynode(x);
+	/**
 	Node *s = (Node*)malloc(sizeof(Node));
 	assert(s != NULL);
 	s->data = x;
 	s->next = NULL;
+	*/
 
 	Node *p = list->first;
 	while (p->next!= NULL && p->next->data < x)
@@ -113,4 +121,140 @@ Node*  find(List *list, ElemType key)
 int length(List* list)
 {
 	return list->size;
+}
+void delete_val(List *list, ElemType key)
+{
+	if (list->size == 0)
+		return;
+	Node *p=find(list, key);
+	if(p==NULL)
+	{
+		printf("要删除的数据%d不存在\n", key);
+		return;
+	}
+	if(p==list->last)
+	{
+		pop_back(list);
+	}else
+	{
+		Node *q = p->next;
+		//下一个节点数据覆盖上一个
+		p->data = q->data;
+		p->next = q->next;
+		free(q);
+		list->size--;	
+	}
+
+}
+//插入排序
+void sort(List *list)
+{
+	if (list->size == 0 || list->size == 1)
+		return;
+	Node *s = list->first->next;
+	Node *q = s->next;
+
+	list->last = s;
+	list->last->next = NULL;
+	while(q!=NULL)
+	{
+		s = q;
+		q = q->next;
+		//拷贝上面插入方法
+		Node *p = list->first;
+		while (p->next != NULL && p->next->data < s->data)
+		{
+			p = p->next;
+		}
+		if (p->next == NULL)
+		{
+			list->last = s;
+		}
+		s->next = p->next;
+		p->next = s;
+	}
+}
+//链表逆置
+void resver(List *list)
+{
+	if (list->size == 0 || list->size == 1)
+		return;
+	Node *p = list->first->next;
+	Node *q = p->next;
+	list->last = p;
+	list->last->next = NULL;
+
+	while(q!=NULL)
+	{
+		p = q;
+		q = q->next;
+
+		p->next = list->first->next;
+		list->first->next = p;
+	}
+
+}
+void clear(List *list)
+{
+	if (list->size == 0)
+		return;
+	Node *p = list->first->next;
+	while(p!=NULL)
+	{
+		list->first->next = p->next;
+		free(p);
+		p = list->first->next;
+	}
+	list->last = list->first;
+	list->size = 0;
+	
+}
+void destroy(List* list)
+{
+	clear(list);
+	free(list->first);
+	list->first = list->last = NULL;
+	
+}
+///////////////////////////////////
+Node* _buynode(ElemType x)
+{
+	Node *s = (Node*)malloc(sizeof(Node));
+	assert(s != NULL);
+	s->data = x;
+	s->next = NULL;
+	return s;
+}
+It begin(List *list)
+{
+	return list->first->next;
+}
+It end(List *list)
+{
+	return list->last->next;
+}
+
+void insert(List *list, It pos, ElemType x)
+{
+	Node *p = list->first;
+	while(p->next!=pos)
+	{
+		p = p->next;
+	}
+	Node *s = _buynode(x);
+	s->next = p->next;
+	p->next = s;
+	if(pos==NULL)
+	{
+		list->last = s;
+	}
+	list->size++;
+}
+void push_back_ByIt(List *list, ElemType x)
+{
+	insert(list, end(list), x);
+}
+void push_front_ByIt(List *list, ElemType x)
+{
+	insert(list, begin(list), x);
 }

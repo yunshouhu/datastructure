@@ -1,5 +1,7 @@
 
 #include "SList.h"
+//目标是No memory leaks detected
+#include <vld.h>
 
 void main()
 {
@@ -88,13 +90,41 @@ void main()
 				printf("单链表的长度为%d\n",length(&mylist));
 			}
 			break;
+			case 9:
+			{
+				printf("请输入要删除的数据:>");
+				scanf("%d", &item);
+				delete_val(&mylist, item);
+				
+			}
+			break;
+			case 10:
+			{
+				sort(&mylist);
+			}
+			break;
+			case 11:
+			{
+				resver(&mylist);
+			}
+			break;
+			case 12:
+			{
+				clear(&mylist);
+			}
+			break;
+			/**case 13:
+			{
+				destroy(&mylist);
+			}
+			break;
+			*/
 				
 			default:
 				break;
 		}
-	
-
 	}
+	destroy(&mylist);
 
 
 }

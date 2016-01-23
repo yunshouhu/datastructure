@@ -37,5 +37,22 @@ void pop_front(List *list);
 void insert_val(List * list, ElemType x);
 Node*  find(List *list, ElemType key);
 int length(List* list);
+void delete_val(List *list,ElemType key);
+void sort(List *list);
+void resver(List *list);
+void clear(List *list);
+void destroy(List* list);
+
+////////////////////////////////
+//µü´úÆ÷
+typedef Node* It;
+
+Node* _buynode(ElemType x);
+
+It begin(List *list);
+It end(List *list);
+void insert(List *list, It pos, ElemType x);
+void push_back_ByIt(List *list, ElemType x);
+void push_front_ByIt(List *list, ElemType x);
 
 #endif // SList_h__
